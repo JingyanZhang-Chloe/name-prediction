@@ -1,6 +1,7 @@
 import numpy as np
 import tensorflow as tf
 import matplotlib.pyplot as plt
+from tensorflow.keras import layers
 
 dataset = tf.keras.utils.image_dataset_from_directory(
     directory='data/',
@@ -9,8 +10,6 @@ dataset = tf.keras.utils.image_dataset_from_directory(
     batch_size=32,                  
     shuffle=True                    
 )
-
-from tensorflow.keras import layers
 
 data_augmentation = tf.keras.Sequential([
     layers.RandomFlip("horizontal"),
