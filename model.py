@@ -18,23 +18,18 @@ def block(x, filters, name=None):
     return x
 
 def build_model():
-    model_input = layers.Input((256, 256, 3))
-    #x = layers.Reshape((255,255,3))(model_input)
+    model_input = layers.Input((120, 150, 3))
     x = block(model_input, 64)
     x = block(x, 128)
     x = block(x, 256)
-    x = block(x, 512)  # (batch_size, A, B, C)
-    x = layers.GlobalAveragePooling2D()(x)
-    x = layers.Dense(1024, activation="relu")(x)
-    x = layers.BatchNormalization()(x)
-    x = layers.Dropout(0.1)(x)
+    x = layers.Flatten()(x)
     x = layers.Dense(512, activation="relu")(x)
     x = layers.BatchNormalization()(x)
     x = layers.Dropout(0.1)(x)
     x = layers.Dense(256, activation="relu")(x)
     x = layers.BatchNormalization()(x)
+    x = layers.Dropout(0.1)(x)
     x = layers.Dense(100, activation="softmax")(x)
-    #x = layers.Softmax()(x)
     model = keras.Model(model_input, x)
     model.compile(loss="sparse_categorical_crossentropy", metrics=["accuracy"])
     return model
