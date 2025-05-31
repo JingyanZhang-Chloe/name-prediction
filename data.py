@@ -2,7 +2,7 @@ from logging.config import valid_ident
 import numpy as np
 import tensorflow as tf
 import matplotlib.pyplot as plt
-from tensorflow.keras import layers
+from keras import layers
 
 train_dataset = tf.keras.utils.image_dataset_from_directory(
     directory='data/',
