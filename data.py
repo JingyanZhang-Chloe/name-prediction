@@ -4,18 +4,10 @@ import tensorflow as tf
 import matplotlib.pyplot as plt
 from tensorflow.keras import layers
 
-dataset = tf.keras.utils.image_dataset_from_directory(
-    directory='data/',
-    labels='inferred',              
-    label_mode='int',               
-    batch_size=32,           
-    shuffle=True                    
-)
-
 train_dataset = tf.keras.utils.image_dataset_from_directory(
     directory='data/',
     validation_split = 0.2,
-    subset = "training",
+    subset = 'training',
     seed = 123,
     labels='inferred',              
     label_mode='int',               
@@ -26,7 +18,7 @@ train_dataset = tf.keras.utils.image_dataset_from_directory(
 val_dataset = tf.keras.utils.image_dataset_from_directory(
     directory='data/',
     validation_split = 0.2,
-    subset = "validation",
+    subset = 'validation',
     seed = 123,
     labels='inferred',              
     label_mode='int',               
@@ -42,6 +34,5 @@ data_augmentation = tf.keras.Sequential([
     layers.Rescaling(1./255),
 ])
 
-augmented_dataset = dataset.map(lambda x, y: (data_augmentation(x, training=True), y))
-augmented_training_dataset = train_dataset.map(lambda x, y: (data_augmentation(x, training=True), y))
-augmented_val_dataset = val_dataset.map(lambda x, y: (data_augmentation(x, training=True), y))
+train_dataset = train_dataset.map(lambda x, y: (data_augmentation(x, training=True), y))
+test_dataset = val_dataset.map(lambda x, y: (data_augmentation(x), y))
