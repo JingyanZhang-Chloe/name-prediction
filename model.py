@@ -3,21 +3,17 @@ import keras
 from keras import layers
 
 def block(x, filters, name=None):
-    shortcut = x
     x = layers.Conv2D(filters, kernel_size=3, padding='same', activation='relu')(x)
     x = layers.BatchNormalization()(x)
     x = layers.Dropout(0.1)(x)   #randomly forget 10% of the output of the previous layer
-    x = layers.Conv2D(filters, kernel_size=3, padding='same')(x)
+    shortcut = x
+    x = layers.Conv2D(filters, kernel_size=3, padding='same', activation="relu")(x)
     x = layers.BatchNormalization()(x)
     x = layers.Dropout(0.1)(x)
-
-    if shortcut.shape[-1] != filters:
-        shortcut = layers.Conv2D(filters, kernel_size=1, padding='same')(shortcut)
-    x = layers.add([x, shortcut])    # stablize the gradient 
-    x = layers.Activation("relu")(x)
-    x = layers.Conv2D(2 * filters, kernel_size=3, padding='same', activation='relu')(x)
+    x = layers.Conv2D(filters, kernel_size=3, padding='same', activation='relu')(x)
     x = layers.BatchNormalization()(x)
     x = layers.Dropout(0.1)(x)
+    x = layers.add([shortcut, x])
     x = layers.MaxPooling2D(pool_size=3, strides=2)(x)
     return x
 
