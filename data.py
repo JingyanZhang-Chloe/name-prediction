@@ -2,9 +2,10 @@ from logging.config import valid_ident
 import numpy as np
 import tensorflow as tf
 import matplotlib.pyplot as plt
+import keras
 from keras import layers
 
-train_dataset = tf.keras.utils.image_dataset_from_directory(
+train_dataset = keras.utils.image_dataset_from_directory(
     directory='data/',
     validation_split = 0.2,
     subset = 'training',
@@ -12,10 +13,11 @@ train_dataset = tf.keras.utils.image_dataset_from_directory(
     labels='inferred',              
     label_mode='int',               
     batch_size=32,           
-    shuffle=True                 
+    shuffle=True,
+    image_size=(120, 150)
 )
 
-val_dataset = tf.keras.utils.image_dataset_from_directory(
+val_dataset = keras.utils.image_dataset_from_directory(
     directory='data/',
     validation_split = 0.2,
     subset = 'validation',
@@ -23,15 +25,16 @@ val_dataset = tf.keras.utils.image_dataset_from_directory(
     labels='inferred',              
     label_mode='int',               
     batch_size=32,           
-    shuffle=True                 
+    shuffle=True,
+    image_size=(120, 150)           
 )
 
-data_augmentation = tf.keras.Sequential([
+data_augmentation = keras.Sequential([
     layers.RandomFlip("horizontal"),
     layers.RandomRotation(0.1),
     layers.RandomZoom(0.1),
     layers.RandomContrast(0.1),
-    layers.Rescaling(1./255),
+    layers.Rescaling(1./127.5, offset=-1),
 ])
 
 train_dataset = train_dataset.map(lambda x, y: (data_augmentation(x, training=True), y))
