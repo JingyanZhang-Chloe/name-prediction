@@ -14,7 +14,7 @@ def block(x, filters, name=None):
     x = layers.BatchNormalization()(x)
     x = layers.Dropout(0.1)(x)
     x = layers.add([shortcut, x])
-    x = layers.MaxPooling2D(pool_size=3, strides=2)(x)
+    x = layers.MaxPooling2D(pool_size=2, strides=2)(x)
     return x
 
 def build_model():
