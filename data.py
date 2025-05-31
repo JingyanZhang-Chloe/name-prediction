@@ -37,5 +37,7 @@ data_augmentation = keras.Sequential([
     layers.Rescaling(1./127.5, offset=-1),
 ])
 
+class_names = train_dataset.class_names
+
 train_dataset = train_dataset.map(lambda x, y: (data_augmentation(x, training=True), y))
 test_dataset = val_dataset.map(lambda x, y: (data_augmentation(x), y))
