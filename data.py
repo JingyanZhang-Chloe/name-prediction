@@ -11,7 +11,7 @@ train_dataset = keras.utils.image_dataset_from_directory(
     seed = 123,
     labels='inferred',              
     label_mode='int',               
-    batch_size=32,           
+    batch_size=64,           
     shuffle=True,
     image_size=(120, 150)
 )
@@ -23,7 +23,7 @@ val_dataset = keras.utils.image_dataset_from_directory(
     seed = 123,
     labels='inferred',              
     label_mode='int',               
-    batch_size=32,           
+    batch_size=64,           
     shuffle=True,
     image_size=(120, 150)           
 )

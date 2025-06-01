@@ -1,5 +1,6 @@
 import keras 
 import data
+import os
 
 my_model = keras.Sequential([
     keras.layers.Conv2D(64, padding="same", kernel_size=3, activation="relu"),
