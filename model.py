@@ -17,6 +17,23 @@ def build_model():
     model_input = layers.Input((120, 150, 3))
     x = block(model_input, 64)
     x = block(x, 128)
+    x = layers.MaxPool2D(pool_size=2, strides=2)(x)
+    x = layers.Conv2D(64, kernel_size=1, padding='valid', activation='relu')(x)
+    x = layers.BatchNormalization()(x)
+    x = layers.Dropout(0.1)(x)
+    x = layers.Flatten()(x)
+    x = layers.Dense(256, activation="relu")(x)
+    x = layers.BatchNormalization()(x)
+    x = layers.Dropout(0.1)(x)
+    x = layers.Dense(100, activation="softmax")(x)
+    model = keras.Model(model_input, x)
+    model.compile(loss="sparse_categorical_crossentropy", metrics=["accuracy"])
+    return model
+
+"""def build_model():
+    model_input = layers.Input((120, 150, 3))
+    x = block(model_input, 64)
+    x = block(x, 128)
     x = block(x, 256)
     x = layers.Conv2D(64, kernel_size=1, padding='valid', activation='relu')(x)
     x = layers.BatchNormalization()(x)
@@ -34,4 +51,4 @@ def build_model():
     x = layers.Dense(100, activation="softmax")(x)
     model = keras.Model(model_input, x)
     model.compile(loss="sparse_categorical_crossentropy", metrics=["accuracy"])
-    return model
+    return model"""
