@@ -16,7 +16,7 @@ def block(x, filters, name=None):
     return x
 
 def build_model():
-    model_input = layers.Input((28, 28, 1))
+    model_input = layers.Input((120, 150, 3))
     #x = layers.Reshape((255,255,3))(model_input)
     x = block(model_input, 64)
     x = block(x, 128)
