@@ -18,7 +18,7 @@ if __name__ == "__main__":
     save_path = input("Where to save the model? ")
     history, validation_history = train(model.build_model(), epochs=epochs, save_path=save_path)
     with open(save_path + ".history", "w") as history_file:
-        history_file.write(json.dumps(np.array(history)))
+        history_file.write(json.dumps(list(history)))
     with open(save_path + ".validation-history", "w") as val_history_file:
-        val_history_file.write(json.dumps(np.array(validation_history)))
+        val_history_file.write(json.dumps(list(validation_history)))
     print("Done")
